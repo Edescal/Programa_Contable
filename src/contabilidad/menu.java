@@ -7,6 +7,7 @@ public class menu extends javax.swing.JFrame {
 
     private ArrayList<Cuenta> cuentas;
     
+    
     public menu() {
         initComponents();
 
@@ -234,7 +235,7 @@ public class menu extends javax.swing.JFrame {
 
         System.out.println("Cuentas:");
         for (var i : cuentas)
-            System.out.println(i.nombre + " | " + i.codigo);
+            System.out.println(i.getNombre() + " | " + i.getId());
     }//GEN-LAST:event_agregarCuenta
 
 
@@ -243,13 +244,13 @@ public class menu extends javax.swing.JFrame {
         var codigo = buscarField.getText();
         Cuenta cuenta = null;
         for (var c : cuentas) {
-            if (c.codigo.equals(codigo)) {
+            if (c.getId().equals(codigo)) {
                 cuenta = c;
             }
         }
 
         //DECTECTA LOS ARTICULOS //
-        var msg = cuenta != null ? "Encontrado: " + cuenta.nombre : "No se encontró nada";
+        var msg = cuenta != null ? "Encontrado: " + cuenta.getNombre() : "No se encontró nada";
         
 
         if (cuenta == null) {
@@ -262,7 +263,7 @@ public class menu extends javax.swing.JFrame {
         // MODELO EN EL CUAL MUESTRA TODO EN LA TABLA//
         var model = new javax.swing.table.DefaultTableModel(
                 new String[][]{
-                    {cuenta.codigo, cuenta.nombre}
+                    {cuenta.getId(), cuenta.getNombre()}
                 },
                 new String[]{
                     "Código", "Nombre"
