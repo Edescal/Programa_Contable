@@ -1,51 +1,96 @@
 package contabilidad;
+
 import java.util.*;
 
 public class Cuenta {
-    private String nombre;
+
+    private Cuenta padre;
     private String id;
-    private ArrayList<Cuenta> subcuentas;
-    
+    private String nombre;
+    private ArrayList<Cuenta> cuentas;
+
     public Cuenta(String nombre, String id) {
         this.nombre = nombre;
         this.id = id;
-        this.subcuentas = new ArrayList<Cuenta>();
+        this.padre = null;
+        this.cuentas = new ArrayList<Cuenta>();
     }
-    
-    public void addSubcuenta(Cuenta sc){
-        for(var sc_: subcuentas){
-            if (sc.getId().equals(sc.getId())){
-                //repetido
-                return;
-            }
-        }
-        subcuentas.add(sc);
-    }
-    
-    public void setNombre(String nombre) {
+
+    public Cuenta(String nombre, Cuenta padre) {
         this.nombre = nombre;
+        this.padre = padre;
+        this.id = padre.getId() + (padre.getCantidadSubcuentas() + 1);
+        this.cuentas = new ArrayList<Cuenta>();
     }
 
-    public void setId(String codigo) {
-        this.id = codigo;
+    public Cuenta() {
+        this.nombre = "CUENTA";
+        this.id = "####";
     }
 
+    
     public String getNombre() {
-        return nombre;
+        return this.nombre;
     }
 
     public String getId() {
-        return id;
+        return this.id;
+    }
+
+    public int getCantidadSubcuentas() {
+        if (cuentas == null) return 0;
+        return cuentas.size();
     }
     
-    public Cuenta buscarSubcuenta(String id){
+    public ArrayList<Cuenta> getCuentas() {
+        return cuentas;
+    }
+
+    public Cuenta[] subcuentas() {
+        Cuenta[] sc = new Cuenta[cuentas.size()];
+        for (int i = 0; i < cuentas.size(); i++) {
+            sc[i] = cuentas.get(i);
+        }
+        return sc;
+    }
+
+    public void addCuenta(Cuenta c) {
+        cuentas.add(c);
+    }
+
+    @Override
+    public String toString() {
+        
+        String separador = "";
+        for(int i = 0; i < id.length(); i++)
+            separador += "\t";
+        
+        String msg = id+","+separador+nombre;
+        for(var c: cuentas)
+            msg += "\n"+c.toString();
+        
+        return msg;
+    }
+
+    public Cuenta buscarSubcuenta(String id) {
+        if (this.id.equals(id)) return this;
+        
         Cuenta c = null;
-        for(Cuenta sc: subcuentas) {
-            if (sc.getId().equals(id)) {
-                c = sc;
-                break;
-            }
+        for (Cuenta sc : cuentas) {
+            c = sc.buscarSubcuenta(id);
+            if (c != null) break;
         }
         return c;
     }
+    
+    public void eliminar() {
+        if (padre == null) {
+            System.out.println("No se puede eliminar");
+            return;
+        }
+        
+        padre.cuentas.remove(this);
+        System.out.println("Se eliminó del padre");
+    }
+
 }

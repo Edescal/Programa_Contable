@@ -1,0 +1,28 @@
+1,	Activo
+11,		Activo circulante
+111,			Caja
+112,			Banco
+1121,				Banamex
+1122,				Bancomer
+1123,				Santander
+113,			Inventario
+1131,				Camisas
+1132,				Gorras
+114,			Clientes
+12,		Activo no circulante
+121,			Equipo Cómputo
+122,			Equipo/Mobiliario
+1221,				Máquinas de ejercicio
+1222,				Pesas
+2,	Pasivo
+21,		Corto plazo
+211,			Proveedores
+2111,				Suplementos Zeus Mérida
+2112,				XTreme Steroids MX
+2113,				Bonafont
+212,			Docs. por pagar
+2121,				Pagaré Dueña del local
+22,		Largo plazo
+221,			Docs. por pagar
+3,	Capital
+31,		Capital social
