@@ -1,7 +1,7 @@
 package contabilidad;
 import java.util.*;
 
-public class Categoria {
+public class Categoria {/*
     private Categoria padre;
     private String id;
     private String nombre;
@@ -68,5 +68,5 @@ public class Categoria {
             }
         }
         return c;
-    }
+    }*/
 }

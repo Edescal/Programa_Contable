@@ -31,6 +31,18 @@ public class menu extends javax.swing.JFrame {
     public void loadTemplate() {
         catalogo = new ArrayList<Cuenta>();
         
+        catalogo.add(new Cuenta("Activo", "1"));
+        catalogo.add(new Cuenta("Pasivo", "2"));
+        catalogo.add(new Cuenta("Capital", "3"));
+        catalogo.add(new Cuenta("Ingresos por servicios", "4"));
+        catalogo.add(new Cuenta("Costo de ventas", "5"));
+        catalogo.add(new Cuenta("Utilidad (pérdida) bruta", "6"));
+        catalogo.add(new Cuenta("Gastos operativos", "7"));
+        catalogo.add(new Cuenta("Total de gastos generales", "8"));
+        catalogo.add(new Cuenta("Utilidad antes de intereses", "9"));
+        catalogo.add(new Cuenta("Utilidad neta", "0"));
+        
+        /*
         activos = new Cuenta("Activo", "1");
         pasivos = new Cuenta("Pasivo", "2");
         capital = new Cuenta("Capital", "3");
@@ -46,6 +58,7 @@ public class menu extends javax.swing.JFrame {
         pasivos.addCuenta(new Cuenta("Largo plazo", pasivos));
         
         capital.addCuenta(new Cuenta("Capital social", capital));
+        */
     }
 
     public void cargarCuentas() {
@@ -67,8 +80,21 @@ public class menu extends javax.swing.JFrame {
             //System.out.println(nombre);
             
             //ENCONTRAR LA CUENTA PADRE
-            if (id.length() > 2){
+            if (id.length() > 1){ //antes era > 2
                 var idPadre = id.substring(0, id.length()-1);
+                
+                Cuenta padre = null;
+                for(var c: catalogo) {
+                    System.out.println(idPadre+" -> "+c.getNombre());
+                    padre = c.buscarSubcuenta(idPadre);
+                    if (padre != null)
+                        break;
+                }
+                
+                if (padre != null) {
+                    padre.addCuenta(new Cuenta(nombre, padre));
+                }
+                /*
                 System.out.println(idPadre);
                 var cuentaPadre = activos.buscarSubcuenta(idPadre);
                 if (cuentaPadre == null) {
@@ -82,6 +108,7 @@ public class menu extends javax.swing.JFrame {
                     cuentaPadre.addCuenta(new Cuenta(nombre, cuentaPadre));
                     System.out.println("QUEEEE"+ id+"  "+nombre);
                 }
+                */
             }
         }
         
@@ -116,6 +143,7 @@ public class menu extends javax.swing.JFrame {
         CargarBoton = new javax.swing.JButton();
         GuardarD = new javax.swing.JButton();
         jLabel5 = new javax.swing.JLabel();
+        testButton = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         Tabla1 = new javax.swing.JTable();
 
@@ -158,7 +186,7 @@ public class menu extends javax.swing.JFrame {
                 "Codigo", "Nombre"
             }
         ));
-        tablaCatalogo.setShowGrid(true);
+        tablaCatalogo.setShowGrid(false);
         jScrollPane5.setViewportView(tablaCatalogo);
 
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
@@ -336,35 +364,48 @@ public class menu extends javax.swing.JFrame {
         jLabel5.setForeground(new java.awt.Color(255, 255, 255));
         jLabel5.setText("CATÁLOGO DE CUENTAS");
 
+        testButton.setText("TEST");
+        testButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                testButtonActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addGap(198, 198, 198)
-                        .addComponent(jLabel5))
-                    .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addGap(126, 126, 126)
-                        .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 118, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(buscarField)
-                            .addComponent(botonBuscar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(CargarBoton, javax.swing.GroupLayout.PREFERRED_SIZE, 136, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(GuardarD, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(POLOLO, javax.swing.GroupLayout.PREFERRED_SIZE, 143, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addContainerGap(209, Short.MAX_VALUE))
+                .addGap(126, 126, 126)
+                .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 118, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(buscarField)
+                    .addComponent(botonBuscar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(CargarBoton, javax.swing.GroupLayout.PREFERRED_SIZE, 136, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(GuardarD, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(POLOLO, javax.swing.GroupLayout.PREFERRED_SIZE, 143, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(203, Short.MAX_VALUE))
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addGap(198, 198, 198)
+                .addComponent(jLabel5)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(testButton)
+                .addGap(82, 82, 82))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
-                .addGap(33, 33, 33)
-                .addComponent(jLabel5)
-                .addGap(26, 26, 26)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addGap(33, 33, 33)
+                        .addComponent(jLabel5))
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addGap(55, 55, 55)
+                        .addComponent(testButton)))
+                .addGap(11, 11, 11)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel3Layout.createSequentialGroup()
                         .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -419,13 +460,23 @@ public class menu extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void GuardarDActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_GuardarDActionPerformed
-        var repo = activos.toString();
-        repo += "\n"+pasivos.toString();
-        repo += "\n"+capital.toString();
+        
+        String info = "";
+        for(int i = 0; i < catalogo.size(); i++) {
+            if (i > 0)
+                info += "\n";
+            info += catalogo.get(i).toString();
+        }
+
+        
+        //var repo = activos.toString();
+        //repo += "\n"+pasivos.toString();
+        //repo += "\n"+capital.toString();
 
         var reporte = new GenerarReporte();
-        reporte.save(repo);
-
+        //reporte.save(repo);
+        reporte.save(info);
+        
         System.out.println("Guardando datos...");
         loadTemplate();
         cargarCuentas();
@@ -443,7 +494,7 @@ public class menu extends javax.swing.JFrame {
 
     private void onGenerarPDF(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_onGenerarPDF
         System.out.println("Exportando PDF");
-
+        /*
         //Todo el texto que se pondrá en el reporte se saca con los toString()
         var repo = activos.toString();
         repo += "\n"+pasivos.toString();
@@ -461,7 +512,15 @@ public class menu extends javax.swing.JFrame {
 
         //Ahora se lee el archivo de texto
         var csv = reporte.readCSV();
-        var filas = csv.split("\n");
+        */
+        String info = "";
+        for(int i = 0; i < catalogo.size(); i++) {
+            if (i > 0)
+                info += "\n";
+            info += catalogo.get(i).toString();
+        }
+        
+        var filas = info.split("\n");
 
         //Para escribir sobre el archivo sin errores, hay que quitar los \n  \t y las comas
         for(int i = 0; i < filas.length; i++) {
@@ -472,6 +531,7 @@ public class menu extends javax.swing.JFrame {
         }
 
         //Se manda a escribir sobre la plantilla pdf
+        var reporte = new GenerarReporte();
         reporte.write(filas);
  
         //Aquí se abre el archivo una vez se guardó
@@ -567,6 +627,30 @@ public class menu extends javax.swing.JFrame {
         JOptionPane.showMessageDialog(rootPane, "Se agregó la cuenta "+nombre+" correctamente");
     }//GEN-LAST:event_agregarCuenta
 
+    private void testButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_testButtonActionPerformed
+        //Encontrar la cuenta seleccionada
+        /*
+        int filaElegida = tablaCatalogo.getSelectedRow();
+        if (filaElegida == -1) return;
+        
+        
+        var id = (String)tablaCatalogo.getValueAt(filaElegida, 0);
+        var cuenta = activos.buscarSubcuenta(id);
+        if (cuenta == null){
+            cuenta = pasivos.buscarSubcuenta(id);
+            if (cuenta == null){
+                cuenta = capital.buscarSubcuenta(id);
+            }
+        }      
+        
+        if (cuenta != null){
+            System.out.println(cuenta.subniveles());
+        }
+        */
+        var l = new LogicaCatalogo();
+        System.out.println(l.toString());
+    }//GEN-LAST:event_testButtonActionPerformed
+
 
     
     private void updateTabla() {  
@@ -576,13 +660,14 @@ public class menu extends javax.swing.JFrame {
                 }, 0
         );
         
+        /*
         //ACTIVOS
         var act = activos.toString();
         var filas = act.split("\n");
         
         for(int i = 0; i < filas.length; i++) {
             filas[i] = filas[i].replace("\n", "");
-            filas[i] = filas[i].replace("\t", "  ");   
+            filas[i] = filas[i].replace("\t", "    ");   
             var col = filas[i].split(",");
             model.addRow(new String[] { col[0], col[1] });
         }
@@ -593,7 +678,7 @@ public class menu extends javax.swing.JFrame {
         
         for(int i = 0; i < filas.length; i++) {
             filas[i] = filas[i].replace("\n", "");
-            filas[i] = filas[i].replace("\t", "  ");   
+            filas[i] = filas[i].replace("\t", "    ");   
             var col = filas[i].split(",");
             model.addRow(new String[] { col[0], col[1] });
         }
@@ -604,9 +689,22 @@ public class menu extends javax.swing.JFrame {
         
         for(int i = 0; i < filas.length; i++) {
             filas[i] = filas[i].replace("\n", "");
-            filas[i] = filas[i].replace("\t", "  ");   
+            filas[i] = filas[i].replace("\t", "    ");   
             var col = filas[i].split(",");
             model.addRow(new String[] { col[0], col[1] });
+        }
+        */
+        
+        for(Cuenta c: catalogo) {
+            String info = c.toString();
+            String[] filas = info.split("\n");
+        
+            for (int i = 0; i < filas.length; i++) {
+                filas[i] = filas[i].replace("\n", "");
+                filas[i] = filas[i].replace("\t", "    ");
+                var col = filas[i].split(",");
+                model.addRow(new String[]{col[0], col[1]});
+            }
         }
         
         tablaCatalogo.setModel(model);
@@ -704,6 +802,7 @@ public class menu extends javax.swing.JFrame {
     private javax.swing.JTable jTable1;
     private javax.swing.JTextField nombreField;
     private javax.swing.JTable tablaCatalogo;
+    private javax.swing.JButton testButton;
     // End of variables declaration//GEN-END:variables
 
     private void Tabla1(String[] datos) {

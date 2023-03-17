@@ -3,14 +3,21 @@ package contabilidad;
 public class Tests {
     
     public static void main(String[] args) {
+        testActs();
         
+        
+    }
+    
+    static void testActs() {
         var activos = new Cuenta("Activo", "1");
         activos.addCuenta(new Cuenta("Circulante", activos));
         activos.addCuenta(new Cuenta("No Circulante", activos));
         
         var circulante = activos.buscarSubcuenta("11");
-        circulante.addCuenta(new Cuenta("Caja", circulante));
-        circulante.addCuenta(new Cuenta("Bancos", circulante));
+        if (circulante != null) {
+            circulante.addCuenta(new Cuenta("Caja", circulante));
+            circulante.addCuenta(new Cuenta("Bancos", circulante));
+        }
 
         var noCirculante = activos.buscarSubcuenta("12");
         noCirculante.addCuenta(new Cuenta("Equipo de Computo", noCirculante));
@@ -28,6 +35,4 @@ public class Tests {
         
         System.out.println(pasivos.toString());
     }
-    
-    
 }

@@ -14,6 +14,7 @@
 122,			Equipo/Mobiliario
 1221,				Máquinas de ejercicio
 1222,				Pesas
+13,		Utilidad (pérdida) neta
 2,	Pasivo
 21,		Corto plazo
 211,			Proveedores
@@ -26,3 +27,17 @@
 221,			Docs. por pagar
 3,	Capital
 31,		Capital social
+4,	Ingresos por servicios
+5,	Costo de ventas
+6,	Utilidad (pérdida) bruta
+7,	Gastos operativos
+71,		Gastos de ventas
+72,		Gastos administrativos
+8,	Total de gastos generales
+9,	Utilidad antes de intereses
+91,		ISR
+92,		PTU
+93,		IA
+0,	Utilidad neta
+
+"1", "11", "12", "2", "21", "22", "3", "31", "4", "5", "6", "7", "71", "72", "8", "9", "0" 
