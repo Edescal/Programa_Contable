@@ -7,7 +7,7 @@ public final class Cuenta {
     private String nombre;
     private double saldo;
     private Cuenta padre;
-    private ArrayList<Cuenta> cuentas;
+    private final ArrayList<Cuenta> cuentas;
 
     public Cuenta(String nombre, String id) {
         this.nombre = nombre;
@@ -25,6 +25,14 @@ public final class Cuenta {
         this.cuentas = new ArrayList<Cuenta>();
     }
     
+    public Cuenta(String nombre, double saldo, Cuenta padre) {
+        this.nombre = nombre;
+        this.padre = padre;
+        this.saldo = saldo;
+        this.id = padre.getId() + (padre.getCantidadSubcuentas() + 1);
+        this.cuentas = new ArrayList<Cuenta>();
+    }
+    
     public Cuenta(String nombre, String id, double saldo) {
         this.nombre = nombre;
         this.id = id;
@@ -34,17 +42,29 @@ public final class Cuenta {
     }
     
     public Cuenta() {
-        this.nombre = "CUENTA";
-        this.id = "####";
+        this.nombre = "";
+        this.id = "";
         this.saldo = 0;
+        this.padre = null;
+        this.cuentas = null;
     }
 
-    
-    public void setNombre(String nombre) { this.nombre = nombre; }
-    public String getNombre() { return this.nombre; }
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
+    }
+
+    public String getNombre() {
+        return this.nombre;
+    }
 
     public String getId() {
         return this.id;
+    }
+
+    public void setSaldo(double saldo) {
+        this.saldo = saldo;
+        if (this.saldo < 0)
+            this.saldo = 0;
     }
     
     public double getSaldo() {
@@ -83,7 +103,7 @@ public final class Cuenta {
         for(int i = 0; i < id.length(); i++)
             separador += "\t";
         
-        String msg = id+","+separador+nombre;
+        String msg = id+","+separador+nombre+", "+saldo;
         for(var c: cuentas)
             msg += "\n"+c.toString();
         
@@ -104,10 +124,9 @@ public final class Cuenta {
     public Cuenta buscarSubcuenta(String id, String[] omitirIds) {
         
         if (this.id.equals(id)) {
-        
             boolean omitir = false;
-            for(int i = 0; i < omitirIds.length; i++) {
-                if (this.id == omitirIds[i])
+            for (String omitirId : omitirIds) {
+                if (this.id.equals(omitirId))
                     omitir = true;
             }
             
@@ -135,7 +154,6 @@ public final class Cuenta {
     
     public int subniveles() {
         int contador = 1;
-        Cuenta padre = this.padre;
         while(padre != null){
             contador++;
             padre = padre.getPadre();

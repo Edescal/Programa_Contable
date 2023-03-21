@@ -1,4 +1,7 @@
 package contabilidad;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.Writer;
 import java.util.*;
 
 public final class LogicaCatalogo {
@@ -7,7 +10,6 @@ public final class LogicaCatalogo {
     
     public LogicaCatalogo(){
         this.catalogo = new ArrayList<Cuenta>();
-        cargarPlantilla();
         cargarCuentas();
     }
     
@@ -25,6 +27,9 @@ public final class LogicaCatalogo {
     }
     
     public void cargarCuentas() {
+        catalogo.clear();
+        cargarPlantilla();
+        
         //Se lee el archivo con las cuentas y se separa cada fila
         var g = new GenerarReporte();
         String archivo = g.readCSV();
@@ -41,9 +46,12 @@ public final class LogicaCatalogo {
             //Si la fila no tiene nada, se pasa a la siguiente
             if(col[0].isEmpty()) continue;
             
+            //for(var s: filas) System.out.println("QUE "+s);
+            
             //Quitar espacios en blanco
             var id = col[0].trim();
             var nombre = col[1].trim();
+            var saldo = 125000d;
 
             //Encontrar la cuenta padre para ligarla
             if (id.length() > 1){
@@ -54,16 +62,14 @@ public final class LogicaCatalogo {
                 //Por cada cuenta principal, se busca en todos sus hijos
                 Cuenta padre = null;
                 for(var c: catalogo) {
-                    System.out.println(idPadre+" -> "+c.getNombre());
                     padre = c.buscarSubcuenta(idPadre);
                     //Si ya se encontró, dejar de buscar
-                    if (padre != null)
-                        break;
+                    if (padre != null) break;
                 }
                 
                 //Si se encontró la cuenta padre, añadirla como hija
                 if (padre != null) {
-                    padre.addCuenta(new Cuenta(nombre, padre));
+                    padre.addCuenta(new Cuenta(nombre, saldo, padre));
                 }
             }
         }
@@ -71,6 +77,29 @@ public final class LogicaCatalogo {
     }
     
     public void guardarCuentas(){
+        String path = System.getProperty("user.dir") + "/Data";
+        try {
+            String info = "";
+            for(int i = 0; i < catalogo.size(); i++) {
+                if (i > 0)
+                    info += "\n";
+                info += catalogo.get(i).toString().replace("\t", "  ");
+            }
+
+            
+            Writer writer = new FileWriter(path+"//catalogo.csv");
+            
+            writer.write(info);
+            writer.close();
+            
+        } catch(IOException e) {
+            System.out.println("IOException");
+        } catch(Exception e) {
+            System.out.println("Exception");
+        }
+    }
+    
+    public void exportarCuentas() {
         String info = "";
         for(int i = 0; i < catalogo.size(); i++) {
             if (i > 0)
@@ -83,15 +112,19 @@ public final class LogicaCatalogo {
         //Para escribir sobre el archivo sin errores, hay que quitar los \n  \t y las comas
         for(int i = 0; i < filas.length; i++) {
             filas[i] = filas[i].replace("\n", "");
-            filas[i] = filas[i].replace("\t", "        ");
-            filas[i] = filas[i].replace(",", "                        ");
+            filas[i] = filas[i].replace("\t", "     ");
+            filas[i] = filas[i].replace(",", "                ");
         }
         
         //Se escribe en la plantilla pdf
         var g = new GenerarReporte();
-        g.write(filas);
+        g.generarReporte(filas);
     }
     
+    public void abrirReporte() throws IOException {
+        var r = new GenerarReporte();
+        r.abrirReporte();
+    }
     
     public Cuenta buscar(String nombre) {
         Cuenta cuenta = null;
