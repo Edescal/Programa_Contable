@@ -52,6 +52,13 @@ public final class LogicaCatalogo {
             var id = col[0].trim();
             var nombre = col[1].trim();
             var saldo = 125000d;
+            try {
+                saldo = Double.parseDouble(col[2].trim());
+            } catch(InputMismatchException e) {
+                System.err.println("Error al parsear: "+e.getMessage());
+            } catch (Exception e) {
+                System.err.println("Error genérico: "+e.getMessage());
+            }
 
             //Encontrar la cuenta padre para ligarla
             if (id.length() > 1){
@@ -112,8 +119,8 @@ public final class LogicaCatalogo {
         //Para escribir sobre el archivo sin errores, hay que quitar los \n  \t y las comas
         for(int i = 0; i < filas.length; i++) {
             filas[i] = filas[i].replace("\n", "");
-            filas[i] = filas[i].replace("\t", "     ");
-            filas[i] = filas[i].replace(",", "                ");
+            filas[i] = filas[i].replace("\t", "  ");
+            //filas[i] = filas[i].replace(",", "");
         }
         
         //Se escribe en la plantilla pdf

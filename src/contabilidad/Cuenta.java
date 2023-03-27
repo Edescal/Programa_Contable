@@ -3,7 +3,7 @@ package contabilidad;
 import java.util.*;
 
 public final class Cuenta {
-    private String id;
+    private final String id;
     private String nombre;
     private double saldo;
     private Cuenta padre;
@@ -103,7 +103,7 @@ public final class Cuenta {
         for(int i = 0; i < id.length(); i++)
             separador += "\t";
         
-        String msg = id+","+separador+nombre+", "+saldo;
+        String msg = id+","+separador+nombre+","+saldo;
         for(var c: cuentas)
             msg += "\n"+c.toString();
         
@@ -111,7 +111,7 @@ public final class Cuenta {
     }
 
     public Cuenta buscarSubcuenta(String id) {
-        if (this.id.equals(id)) return this;
+        if (this.id.equals(id) || this.nombre.equals(id)) return this;
         
         Cuenta c = null;
         for (Cuenta sc : cuentas) {

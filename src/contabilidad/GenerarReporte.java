@@ -1,7 +1,7 @@
 package contabilidad;
 import java.awt.*;
 import java.io.*;
-import javax.swing.JOptionPane;
+import java.util.*;
 import org.apache.pdfbox.pdmodel.*;
 import org.apache.pdfbox.pdmodel.font.*;
 import org.apache.pdfbox.pdmodel.PDPageContentStream.*;
@@ -11,15 +11,19 @@ public class GenerarReporte {
     private final String path = System.getProperty("user.dir") + "/Data/Reporte.pdf";
     private final String catalogo = System.getProperty("user.dir") + "/Data/catalogo.csv";
     private final PDFont font = PDType1Font.TIMES_ROMAN;
-    private final float fontSize = 14;
+    private final float fontSize = 12;
     private final float leading = 1f * fontSize;
 
     public boolean generarReporte(String[] cuentas) {
         
         try {
-            PDDocument doc = new PDDocument();
-            PDPage page = new PDPage();
-            doc.addPage(page);
+            //PDDocument doc = new PDDocument();
+            //PDPage page = new PDPage();
+            //doc.addPage(page);
+            
+            File file = new File(System.getProperty("user.dir")+"/Data/Plantilla.pdf");
+            PDDocument doc = PDDocument.load(file);
+            PDPage page = doc.getPage(0);
             
             var stream = new PDPageContentStream(doc, page, AppendMode.APPEND, true, true);
             
@@ -28,20 +32,38 @@ public class GenerarReporte {
             stream.setFont(font, fontSize);
             stream.setLeading(leading);
             stream.beginText();
-            stream.newLineAtOffset(60, page.getMediaBox().getHeight() - (8*leading));
-            //Escribir texto
-
-            stream.showText("CATÁLOGO DE CUENTAS:");
-            stream.newLineAtOffset(0, -2*leading);
             
+            //Escribir texto
+            stream.newLineAtOffset(80, page.getMediaBox().getHeight() - (14 * leading));
+            stream.showText("CATÁLOGO DE CUENTAS:");
+
+            stream.newLineAtOffset(0, -2*leading);
+            stream.showText("Código");
+            stream.newLineAtOffset(70, 0);
+            stream.showText("Nombre");
+            stream.newLineAtOffset(200, 0);
+            stream.showText("Saldo");
+            stream.newLineAtOffset(-270, -leading);
+        
             for(String s: cuentas) {
-                stream.showText(s);
-                stream.newLine();
+                var split = s.split(",");
+                stream.showText(split[0]);
+                stream.newLineAtOffset(70, 0);
+                stream.showText(split[1]);
+                stream.newLineAtOffset(200, 0);
+                stream.showText(split[2]);
+                stream.newLineAtOffset(-270, -leading);
+                
+                //stream.showText(s);
+                //stream.newLine();
             }
+            
+            
             
             stream.endText();
             stream.close();
             doc.save(path);
+            doc.close();
             
         } catch(Exception e) {
             
@@ -66,53 +88,6 @@ public class GenerarReporte {
     }
 
     
-    public void write(String[] text) {
-    
-        try {
-            
-            File membrete = new File(System.getProperty("user.dir") + "/Data/Plantilla.pdf");
-            
-            PDDocument doc = PDDocument.load(membrete);
-            PDPage page = doc.getPage(0);
-            
-            
-            
-            PDDocument reporte = new PDDocument();
-            reporte.addPage(new PDPage());
-            reporte.addPage(new PDPage());
-            
-            PDPageContentStream s = new PDPageContentStream(reporte, reporte.getPage(0), AppendMode.APPEND, true, true);
-            
-            s.beginText();
-
-            s.newLineAtOffset(85, 560);
-            
-            s.setNonStrokingColor(Color.BLACK);
-            s.setFont(PDType1Font.TIMES_ROMAN, 14);
-            s.setLeading(1.5f*12);
-            /*
-            s.showText("CATÁLOGO DE CUENTAS: ");
-            s.newLine();
-             */
-            for (String t : text) {
-                s.showText(t);
-                s.newLine();
-            }
-            
-            s.endText();
-            s.close();
-            
-            reporte.save(path);
-            
-        } catch(IOException e) {
-            System.out.println("ERROR: "+e.getMessage());
-        } catch(Exception e) {
-            System.out.println("ERROR: "+e.getMessage());
-        }
-        
-            
-    }
-
     public void save(String text) {
         try {
             Writer writer = new FileWriter(catalogo);

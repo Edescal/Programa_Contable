@@ -1,42 +1,42 @@
-1,  Activo, 0.0
-11,    Activo circulante, 125000.0
-111,      Caja, 125000.0
-112,      Banco, 125000.0
-1121,        Banamex, 125000.0
-1122,        Bancomer, 125000.0
-1123,        Santander, 125000.0
-1124,        Banco Azteca, 125000.0
-113,      Inventario, 125000.0
-1131,        Camisas, 125000.0
-1132,        Gorras, 125000.0
-114,      Clientes, 125000.0
-12,    Activo no circulante, 125000.0
-121,      Equipo Cómputo, 125000.0
-122,      Equipo/Mobiliario, 125000.0
-1221,        Máquinas de ejercicio, 125000.0
-1222,        Pesas, 125000.0
-13,    Utilidad (pérdida) neta, 125000.0
-2,  Pasivo, 0.0
-21,    Corto plazo, 125000.0
-211,      Proveedores, 125000.0
-2111,        Suplementos Zeus Mérida, 125000.0
-2112,        XTreme Steroids MX, 125000.0
-2113,        Bonafont, 125000.0
-212,      Docs. por pagar, 125000.0
-2121,        Pagaré Dueña del local, 125000.0
-22,    Largo plazo, 125000.0
-221,      Docs. por pagar, 125000.0
-3,  Capital, 0.0
-31,    Capital social, 125000.0
-4,  Ingresos por servicios, 0.0
-5,  Costo de ventas, 0.0
-6,  Utilidad (pérdida) bruta, 0.0
-7,  Gastos operativos, 0.0
-71,    Gastos de ventas, 125000.0
-72,    Gastos administrativos, 125000.0
-8,  Total de gastos generales, 0.0
-9,  Utilidad antes de intereses, 0.0
-91,    ISR, 125000.0
-92,    PTU, 125000.0
-93,    IA, 125000.0
-0,  Utilidad neta, 0.0
+1,  Activo,0.0
+11,    Activo circulante,125000.0
+111,      Caja,125000.0
+112,      Banco,150000.0
+1121,        Banamex,75000.0
+1122,        Bancomer,125000.0
+1123,        Santander,125000.0
+1124,        Banco Azteca,125000.0
+113,      Inventario,125000.0
+1131,        Camisas,125000.0
+1132,        Gorras,125000.0
+114,      Clientes,125000.0
+12,    Activo no circulante,125000.0
+121,      Equipo Cómputo,175000.0
+122,      Equipo/Mobiliario,125000.0
+1221,        Máquinas de ejercicio,125000.0
+1222,        Pesas,125000.0
+13,    Utilidad (pérdida) neta,125000.0
+2,  Pasivo,0.0
+21,    Corto plazo,125000.0
+211,      Proveedores,125000.0
+2111,        Suplementos Zeus Mérida,125000.0
+2112,        XTreme Steroids MX,125000.0
+2113,        Bonafont,125000.0
+212,      Docs. por pagar,125000.0
+2121,        Pagaré Dueña del local,125000.0
+22,    Largo plazo,125000.0
+221,      Docs. por pagar,125000.0
+3,  Capital,0.0
+31,    Capital social,125000.0
+4,  Ingresos por servicios,0.0
+5,  Costo de ventas,0.0
+6,  Utilidad (pérdida) bruta,0.0
+7,  Gastos operativos,0.0
+71,    Gastos de ventas,125000.0
+72,    Gastos administrativos,125000.0
+8,  Total de gastos generales,0.0
+9,  Utilidad antes de intereses,0.0
+91,    ISR,125000.0
+92,    PTU,125000.0
+93,    IA,125000.0
+0,  Utilidad neta,0.0

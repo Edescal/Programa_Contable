@@ -3,12 +3,10 @@ package contabilidad;
 import java.io.IOException;
 import java.util.InputMismatchException;
 import javax.swing.*;
-
 import javax.swing.event.*;
 import javax.swing.table.*;
 
 public final class InterfazGrafica extends javax.swing.JFrame {
-
     private final LogicaCatalogo logica;
 
     public InterfazGrafica() {
@@ -51,6 +49,7 @@ public final class InterfazGrafica extends javax.swing.JFrame {
         jLabel8 = new javax.swing.JLabel();
         botonEditar = new javax.swing.JButton();
         botonEliminar = new javax.swing.JButton();
+        botonVentana = new javax.swing.JButton();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         jMenu2 = new javax.swing.JMenu();
@@ -299,7 +298,7 @@ public final class InterfazGrafica extends javax.swing.JFrame {
         codigoLabel.setText("1.2.10");
         codigoLabel.setOpaque(true);
 
-        jLabel8.setBackground(new java.awt.Color(0, 102, 153));
+        jLabel8.setBackground(new java.awt.Color(0, 102, 204));
         jLabel8.setFont(new java.awt.Font("Consolas", 1, 14)); // NOI18N
         jLabel8.setForeground(new java.awt.Color(255, 255, 255));
         jLabel8.setLabelFor(panelDatos);
@@ -371,6 +370,16 @@ public final class InterfazGrafica extends javax.swing.JFrame {
                 .addContainerGap())
         );
 
+        botonVentana.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/new.png"))); // NOI18N
+        botonVentana.setText("Nueva transacción");
+        botonVentana.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        botonVentana.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        botonVentana.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                botonNuevaVentanaPerformed(evt);
+            }
+        });
+
         jMenu1.setText("File");
         jMenuBar1.add(jMenu1);
 
@@ -391,9 +400,14 @@ public final class InterfazGrafica extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGap(20, 20, 20)
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(38, 38, 38)
-                .addComponent(panelDatos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(26, Short.MAX_VALUE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(38, 38, 38)
+                        .addComponent(panelDatos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(152, 152, 152)
+                        .addComponent(botonVentana, javax.swing.GroupLayout.PREFERRED_SIZE, 144, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -405,7 +419,10 @@ public final class InterfazGrafica extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(panelDatos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(panelDatos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(63, 63, 63)
+                        .addComponent(botonVentana, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -599,6 +616,14 @@ public final class InterfazGrafica extends javax.swing.JFrame {
         
     }//GEN-LAST:event_botonEditarPerformed
 
+    private void botonNuevaVentanaPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonNuevaVentanaPerformed
+        DoblePartida ventana = new DoblePartida(logica);
+        ventana.setVisible(true);
+        ventana.setResizable(false);
+        ventana.setTitle("Herramienta para realizar transacciones entre cuentas");
+    }//GEN-LAST:event_botonNuevaVentanaPerformed
+
+    
     private void mostrarDatosEnTabla() {
         //Crear el modelo
         var model = new DefaultTableModel(
@@ -634,7 +659,6 @@ public final class InterfazGrafica extends javax.swing.JFrame {
         //Configurar dimensiones de la tabla
         tablaCatalogo.setAutoResizeMode(JTable.AUTO_RESIZE_LAST_COLUMN);
         tablaCatalogo.getTableHeader().setReorderingAllowed(false);
-        tablaCatalogo.getColumnModel().getColumn(0).setMinWidth(70);
         tablaCatalogo.getColumnModel().getColumn(0).setMaxWidth(70);
         tablaCatalogo.getColumnModel().getColumn(0).setMinWidth(250);
         tablaCatalogo.getColumnModel().getColumn(1).setMaxWidth(300);
@@ -687,8 +711,6 @@ public final class InterfazGrafica extends javax.swing.JFrame {
         //Regresar el resultado (checar si es nulo)
         return cuentaSeleccionada;
     }
-
-    
     
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
@@ -717,8 +739,11 @@ public final class InterfazGrafica extends javax.swing.JFrame {
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
+            @Override
             public void run() {
-                new InterfazGrafica().setVisible(true);
+                InterfazGrafica ig = new InterfazGrafica();
+                ig.setVisible(true);
+                ig.setResizable(false);
             }
         });
     }
@@ -732,6 +757,7 @@ public final class InterfazGrafica extends javax.swing.JFrame {
     private javax.swing.JButton botonEliminar;
     private javax.swing.JButton botonExportar;
     private javax.swing.JButton botonGuardar;
+    private javax.swing.JButton botonVentana;
     private javax.swing.JTextField buscarField;
     private javax.swing.JLabel codigoLabel;
     private javax.swing.JButton jButton2;

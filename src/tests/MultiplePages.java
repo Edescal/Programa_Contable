@@ -1,9 +1,8 @@
-package contabilidad;
+package tests;
 
 import java.awt.Color;
-import java.util.List;
+import java.util.*;
 import java.io.*;
-import java.util.ArrayList;
 
 import org.apache.pdfbox.pdmodel.*;
 import org.apache.pdfbox.pdmodel.font.*;
@@ -46,14 +45,15 @@ public class MultiplePages {
         s.setFont(font, fontSize);
         s.beginText();
         
+        /*
         s.newLineAtOffset(marginX, mediaBox.getHeight() - (10 * fontSize));
         s.showText("CATÁLOGO DE CUENTAS:");
-        /*
+        */
+        s.newLineAtOffset(0, mediaBox.getHeight());
         for(int i = 0; i < 90; i++) {
-            s.showText(i+"  ||///////////////||||||||||||||||||||||||||||||||||");
+            s.showText(i+"  |Tamaño de fuente 12| ------------------------------------------<)");
             s.newLine();
         }
-        */
 
         //addParagraph(s, width, startX, startY, text1, true);
         s.endText();
